@@ -1,0 +1,276 @@
+{% extends 'basic.html' %}
+{% load static %}
+{% load markdownify %}
+
+{% block title %}{{ trip.destination }} Trip Details{% endblock %}
+
+{% block content %}
+<div class="container-fluid mt-3">
+    <div class="row justify-content-center">
+        <div class="col-lg-10 col-xl-9">
+            <div class="text-center mb-4">
+                <h1 class="display-4 fw-bold">My Trip</h1>
+                <p class="lead text-muted">Plan your perfect getaway with AI assistance</p>
+            </div>
+
+            <div class="card shadow-lg mb-5">
+                <div class="card-header bg-primary text-white py-3">
+                    <h2 class="card-title text-center mb-0 display-5 fw-bold">Your Personalized Trip</h2>
+                </div>
+                
+                <div class="card-body p-4">
+                    <div class="text-center mb-4">
+                        <h3 class="fw-bold display-6">
+                            {{ trip.destination }} {{ trip.get_trip_type_display }} Adventure: 
+                            {{ trip.start_date|date:"M j" }} - {{ trip.end_date|date:"j, Y" }}
+                        </h3>
+                    </div>
+                    
+                    <div class="trip-plan-content">
+                        {% if trip.plan and trip.plan.content %}
+                            <div class="markdown-content">
+                                {{ trip.plan.content|markdownify|safe }}
+                            </div>
+                        {% else %}
+                            <div class="text-center py-5">
+                                <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
+                                    <span class="visually-hidden">Loading...</span>
+                                </div>
+                                <p class="mt-4 fs-3 fw-medium">Generating your personalized trip with AI...</p>
+                                <p class="text-muted fs-5">This may take a few moments</p>
+                                
+                                <script>
+                                    setTimeout(function() {
+                                        window.location.reload();
+                                    }, 5000);
+                                </script>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
+            <div class="text-center mb-5">
+                <button class="btn btn-outline-primary me-3" onclick="window.location.href='{% url 'index' %}'">
+        <i class="bi bi-house me-2"></i> Home
+    </button>
+                <button class="btn btn-primary btn-lg" onclick="window.location.href='{% url 'my_trips' %}' ">
+                    <i class="bi bi-download me-2"></i> My Trips
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+    .card {
+    border-radius: 15px;
+    border: none;
+    overflow: hidden;
+    width: 100%; /* full width inside column */
+    max-width: 100%; /* override fixed width */
+}
+
+    /* Add to your extra_css block */
+.btn-outline-custom {
+    color: #6c757d;
+    border-color: #6c757d;
+    transition: all 0.3s ease;
+}
+
+.btn-outline-custom:hover {
+    color: #fff;
+    background-color: #6c757d;
+    border-color: #6c757d;
+}
+
+/* Button spacing */
+.text-center.mb-5 button {
+    margin: 0 5px;
+    min-width: 120px;
+}
+
+/* Responsive button stacking */
+@media (max-width: 576px) {
+    .text-center.mb-5 button {
+        display: block;
+        width: 100%;
+        margin: 5px 0;
+    }
+}
+    
+    .card-header {
+        padding: 1.25rem;
+        border-bottom: 2px solid rgba(255,255,255,0.2);
+    }
+    
+    .trip-plan-content {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        line-height: 1.8;
+        color: #333;
+        font-size: 1.1rem;
+    }
+    
+    .markdown-content h1, 
+    .markdown-content h2 {
+        color: #2c3e50;
+        margin-top: 3rem;
+        margin-bottom: 1.5rem;
+        font-weight: 700;
+        padding-bottom: 0.75rem;
+        border-bottom: 2px solid #eaeaea;
+    }
+    
+    /* Day heading style */
+    .markdown-content h3 {
+        color: #2c3e50;
+        background: linear-gradient(to right, #f8f9fa, #e9ecef);
+        font-size: 1.8rem;
+        font-weight: 700;
+        padding: 15px 20px;
+        margin-top: 3rem;
+        margin-bottom: 1.5rem;
+        border-left: 5px solid #3498db;
+        border-radius: 0 8px 8px 0;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    }
+    
+    .markdown-content h4 {
+        color: #2c3e50;
+        margin-top: 2.5rem;
+        margin-bottom: 1.25rem;
+        font-size: 1.4rem;
+        font-weight: 600;
+    }
+    
+    .markdown-content p {
+        margin-bottom: 1.5rem;
+        font-size: 1.15rem;
+        line-height: 1.8;
+    }
+    
+    .markdown-content ul,
+    .markdown-content ol {
+        padding-left: 2rem;
+        margin-bottom: 1.75rem;
+    }
+    
+    .markdown-content li {
+        margin-bottom: 0.8rem;
+        font-size: 1.1rem;
+    }
+    
+    .markdown-content strong {
+        font-weight: 700;
+        color: #2c3e50;
+        background-color: #f8f9fa;
+        padding: 0 4px;
+    }
+    
+    .markdown-content hr {
+        border: 0;
+        height: 1px;
+        background: linear-gradient(to right, rgba(52, 152, 219, 0.1), rgba(52, 152, 219, 0.5), rgba(52, 152, 219, 0.1));
+        margin: 3rem 0;
+    }
+    
+    /* Responsive design */
+    @media (max-width: 992px) {
+        .container-fluid {
+            padding: 0 15px;
+        }
+        
+        .markdown-content h3 {
+            font-size: 1.6rem;
+            padding: 12px 16px;
+        }
+    }
+    
+    @media (max-width: 768px) {
+        .card-header h2 {
+            font-size: 1.5rem;
+        }
+        
+        .markdown-content h3 {
+            font-size: 1.4rem;
+        }
+        
+        .markdown-content p {
+            font-size: 1.05rem;
+        }
+        
+        .trip-plan-content {
+            font-size: 1rem;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    document.getElementById('saveTripBtn').addEventListener('click', function() {
+        // Create a printable version
+        const printContent = `
+            <html>
+                <head>
+                    <title>My Trip to ${document.querySelector('.markdown-content h3').textContent}</title>
+                    <style>
+                        body { 
+                            font-family: Arial, sans-serif; 
+                            line-height: 1.7; 
+                            color: #333; 
+                            max-width: 1000px;
+                            margin: 0 auto;
+                            padding: 20px;
+                        }
+                        h1, h2, h3 { color: #2c3e50; }
+                        h3 { 
+                            background: #f8f9fa; 
+                            padding: 12px 15px;
+                            border-left: 4px solid #3498db;
+                            margin-top: 30px;
+                        }
+                        .header { 
+                            text-align: center; 
+                            margin-bottom: 40px;
+                            padding-bottom: 20px;
+                            border-bottom: 2px solid #eee;
+                        }
+                        .footer { 
+                            margin-top: 50px; 
+                            text-align: center; 
+                            font-size: 0.9em; 
+                            color: #777; 
+                            padding-top: 20px;
+                            border-top: 1px solid #eee;
+                        }
+                    </style>
+                </head>
+                <body>
+                    <div class="header">
+                        <h1>My Trip Plan</h1>
+                        <h2>${document.querySelector('.trip-title h3').textContent}</h2>
+                        <p>Generated on ${new Date().toLocaleDateString()}</p>
+                    </div>
+                    <div class="content">
+                        ${document.querySelector('.markdown-content').innerHTML}
+                    </div>
+                    <div class="footer">
+                        <p>Created with AI Trip Planner</p>
+                    </div>
+                </body>
+            </html>
+        `;
+        
+        const printWindow = window.open('', '_blank');
+        printWindow.document.write(printContent);
+        printWindow.document.close();
+        printWindow.focus();
+        printWindow.print();
+        printWindow.close();
+        
+    });
+</script>
+{% endblock %}

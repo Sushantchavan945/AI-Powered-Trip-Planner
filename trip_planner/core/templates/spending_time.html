@@ -1,0 +1,135 @@
+{% extends "basic.html" %}
+
+{% block extra_css %}
+<style>
+  body {
+    background: #f4f4f4;
+    font-family: 'Segoe UI', sans-serif;
+    padding: 50px;
+  }
+
+  .spending-card {
+    background-color: #fff;
+    padding: 40px;
+    border-radius: 15px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  h2 {
+    font-weight: bold;
+    font-size: 26px;
+    margin-bottom: 10px;
+  }
+
+  .option-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+    margin: 20px 0;
+  }
+
+  .option-btn {
+    background-color: white;
+    border: 2px solid #ccc;
+    border-radius: 10px;
+    padding: 15px;
+    font-weight: 500;
+    cursor: pointer;
+    text-align: center;
+    transition: 0.3s ease;
+  }
+
+  .option-btn.selected {
+    background-color: #7b2cbf;
+    color: white;
+    border-color: #7b2cbf;
+  }
+
+  .option-btn input {
+    display: none;
+  }
+
+  .optional-fields {
+    margin-top: 30px;
+  }
+
+  .form-control {
+    border-radius: 8px;
+    padding: 10px;
+    margin-bottom: 15px;
+    width: 100%;
+    border: 1px solid #ccc;
+  }
+
+  .btn-gradient {
+    background: linear-gradient(to right, #6a11cb, #2575fc);
+    color: white;
+    font-weight: 600;
+    border: none;
+    padding: 12px;
+    width: 100%;
+    border-radius: 8px;
+    transition: 0.3s ease;
+  }
+
+  .btn-gradient:hover {
+    background: linear-gradient(to right, #2575fc, #6a11cb);
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="spending-card">
+  <h2>How do you want to spend your time?</h2>
+  <p>Select all that apply</p>
+
+  <form method="POST">
+    {% csrf_token %}
+
+    <div class="option-grid">
+      {% for spending in spending_types %}
+        <label class="option-btn">
+          <input type="checkbox" name="spending_types" value="{{ spending.id }}">
+          {{ spending.get_name_display }}
+        </label>
+      {% endfor %}
+    </div>
+
+    <div class="optional-fields">
+      <h5>Travel Details (Optional)</h5>
+      <input type="text" name="travel_from" placeholder="City, Country" class="form-control">
+      <select name="transport_mode" class="form-control">
+        <option value="">Select transportation mode</option>
+        <option value="Flight">Flight</option>
+        <option value="Train">Train</option>
+        <option value="Bus">Bus</option>
+        <option value="Car">Car</option>
+      </select>
+    </div>
+
+    <button type="submit" class="btn btn-gradient mt-3">Create Trip</button>
+  </form>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const labels = document.querySelectorAll('.option-btn');
+
+    labels.forEach(label => {
+      const checkbox = label.querySelector('input[type="checkbox"]');
+
+      label.addEventListener('click', function (e) {
+        // Prevent double toggle due to label behavior
+        e.preventDefault();
+
+        checkbox.checked = !checkbox.checked;
+        label.classList.toggle('selected', checkbox.checked);
+      });
+    });
+  });
+</script>
+{% endblock %}

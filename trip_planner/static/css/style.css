@@ -1,0 +1,167 @@
+
+        :root {
+            --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --secondary-gradient: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        }
+        
+        body {
+            font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            min-height: 100vh;
+            margin: 0;
+            padding: 0;
+            background: var(--secondary-gradient);
+            color: #2d3748;
+            position: relative;
+            overflow-x: hidden;
+        }
+        
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--primary-gradient);
+            clip-path: polygon(0 0, 100% 0, 100% 30%, 0 50%);
+            z-index: -1;
+        }
+        
+        .card {
+            background-color: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 2.5rem;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 100%;
+            max-width: 500px;
+            border: none;
+            backdrop-filter: blur(5px);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+        
+        .travel-illustration {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 12px;
+            margin: 1.5rem 0;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+        
+        .travel-illustration:hover {
+            transform: scale(1.02);
+        }
+        
+        .btn-primary-custom {
+            background: var(--primary-gradient);
+            color: white;
+            border: none;
+            border-radius: 30px;
+            padding: 0.75rem 2.5rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .btn-primary-custom:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.6);
+            color: white;
+        }
+        
+        .btn-primary-custom::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: 1;
+        }
+        
+        .btn-primary-custom:hover::after {
+            opacity: 1;
+        }
+        
+        .btn-primary-custom span {
+            position: relative;
+            z-index: 2;
+        }
+        
+        .btn-outline-custom {
+            margin-top: 1rem;
+            border-radius: 30px;
+            padding: 0.75rem 2.5rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            border: 2px solid #667eea;
+            color: #667eea;
+            transition: all 0.3s ease;
+            background: transparent;
+        }
+        
+        .btn-outline-custom:hover {
+            background: rgba(102, 126, 234, 0.1);
+            color: #667eea;
+            transform: translateY(-2px);
+        }
+        
+        h1 {
+            font-weight: 700;
+            color: #2d3748;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .subtitle {
+            color: #4a5568;
+            font-weight: 400;
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+        }
+        
+        .ai-badge {
+            display: inline-block;
+            background: rgba(102, 126, 234, 0.1);
+            color: #667eea;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-top: 1rem;
+            letter-spacing: 0.5px;
+        }
+        
+        @media (max-width: 576px) {
+            .card {
+                padding: 2rem 1.5rem;
+                margin: 1rem;
+            }
+            
+            h1 {
+                font-size: 1.8rem;
+            }
+            
+            .subtitle {
+                font-size: 1rem;
+            }
+            
+            body::before {
+                clip-path: polygon(0 0, 100% 0, 100% 20%, 0 40%);
+            }
+        }

@@ -1,0 +1,44 @@
+{% extends 'basic.html' %}
+{% load static %}
+
+{% block extra_css %}
+<style>
+.logout-btn {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        background-color: #dc3545;
+        color: white;
+        padding: 10px 15px;
+        border-radius: 5px;
+        text-decoration: none;
+        font-weight: bold;
+        transition: background-color 0.3s ease;
+      }
+      .logout-btn:hover {
+        background-color: #a71d2a;
+      }
+
+
+</style>
+{% endblock %}
+{% block content %}
+
+<div class="container d-flex align-items-center justify-content-center" style="min-height: 100vh;">
+    <div class="card animate__animated animate__fadeIn">
+        <h1>Your Perfect Journey Awaits</h1>
+        <p class="subtitle">Let our AI craft a personalized travel itinerary tailored just for you</p>
+        <img src="{% static 'images/kyle-loftus-DDxWBUhLkmo-unsplash.jpg' %}" alt="Travel destination" class="travel-illustration">
+        <div class="d-grid gap-2">
+            <button class="btn btn-primary-custom" onclick="window.location.href='{% url 'plan_trip' %}'">
+                <span>Plan My Dream Trip</span>
+            </button>
+            <button class="btn btn-outline-custom" onclick="window.location.href='{% url 'my_trips' %}'">Explore My Trips</button>
+        </div>
+        <div class="ai-badge animate__animated animate__pulse animate__infinite">
+            POWERED BY AI TECHNOLOGY
+        </div>
+    </div>
+</div>
+{% endblock %}
+

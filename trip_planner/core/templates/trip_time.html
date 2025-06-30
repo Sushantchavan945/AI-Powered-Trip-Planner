@@ -1,0 +1,81 @@
+{% extends 'basic.html' %}
+{% load static %}
+
+{% block title %}Plan My Trip | My Trip Planner{% endblock %}
+
+{% block content %}
+     <div class="trip-card">
+        <h2>When do you want to go?</h2>
+        <form method="POST" action="">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label for="start_date">Start Date</label>
+                <input type="date" class="form-control" name="start_date" required>
+            </div>
+            <div class="mb-3">
+                <label for="end_date">End Date</label>
+                <input type="date" class="form-control" name="end_date" required>
+            </div>
+            <button type="submit" class="btn btn-gradient">Next</button>
+        </form>
+    </div>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+        body {
+            background: linear-gradient(to right, #6a11cb, #2575fc);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        .trip-card {
+            background-color: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            width: 100%;
+            max-width: 600px;
+        }
+
+        .trip-card h2 {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        label {
+            font-weight: 500;
+            margin-bottom: 5px;
+        }
+
+        .form-control[type="date"] {
+            padding: 12px;
+        }
+
+        .btn-gradient {
+            background: linear-gradient(to right, #6a11cb, #2575fc);
+            color: white;
+            border: none;
+            padding: 12px;
+            width: 100%;
+            font-weight: 600;
+            border-radius: 8px;
+            margin-top: 25px;
+            transition: background 0.3s ease;
+        }
+
+        .btn-gradient:hover {
+            background: linear-gradient(to right, #2575fc, #6a11cb);
+        }
+    </style>
+
+{% endblock %}
+
+{% block extra_js %}
+
+{% endblock %}
